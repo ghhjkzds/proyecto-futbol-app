@@ -1,0 +1,37 @@
+### 🌐 INTERFAZ WEB (Abre en el navegador)
+### URL: http://localhost:8081
+### ¡Ahora puedes registrarte e iniciar sesión desde el navegador!
+
+### Verificar que el servidor está corriendo
+GET http://localhost:8081/actuator/health
+
+### Registro de usuario
+POST http://localhost:8081/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123456"
+}
+
+### Login de usuario
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123456"
+}
+
+### Registro con otro usuario
+POST http://localhost:8081/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "admin123"
+}
+
+### H2 Console (abre en navegador)
+GET http://localhost:8081/h2-console
+

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Proyecto ACD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.success {
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+            display: block !important;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            display: block !important;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            color: #999;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .register-link p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loader.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>🔐 Login</h1>
+            <p>Proyecto ACD - Gestión de Equipos</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event); return false;">
+            <div class="form-group">
+                <label for="email">📧 Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="tu@email.com"
+                    required
+                    autocomplete="email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔒 Contraseña</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Tu contraseña"
+                    required
+                    autocomplete="current-password"
+                >
+            </div>
+
+            <div class="forgot-password">
+                <a href="#" onclick="alert('Funcionalidad en desarrollo'); return false;">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="remember">
+                <label for="remember">Recordarme</label>
+            </div>
+
+            <button type="submit" class="btn">Iniciar Sesión</button>
+        </form>
+
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+            <p>Iniciando sesión...</p>
+        </div>
+
+        <div class="divider">o</div>
+
+        <div class="links">
+            <a href="/">🏠 Inicio</a>
+            <a href="/h2-console" target="_blank">🗄️ Base de Datos</a>
+            <a href="/actuator/health" target="_blank">💚 Health</a>
+        </div>
+
+        <div class="register-link">
+            <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            const loader = document.getElementById('loader');
+            const alert = document.getElementById('alert');
+            const form = document.getElementById('loginForm');
+
+            // Mostrar loader y ocultar alerta anterior
+            loader.classList.add('active');
+            alert.className = 'alert';
+            alert.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                loader.classList.remove('active');
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Guardar token con el nombre correcto
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userEmail', data.email);
+                    localStorage.setItem('userRole', data.role);
+
+                    // Mostrar éxito
+                    alert.className = 'alert success';
+                    alert.style.display = 'block';
+                    alert.innerHTML = `
+                        <strong>✅ Login exitoso!</strong><br>
+                        Bienvenido, ${data.email} (${data.role})
+                    `;
+
+                    // Limpiar formulario
+                    form.reset();
+
+                    // Redirigir después de 1 segundo
+                    setTimeout(() => {
+                        alert.innerHTML += '<br><em>Redirigiendo al inicio...</em>';
+                        window.location.href = '/index.html';
+                    }, 1000);
+                } else {
+                    // Error de autenticación
+                    const data = await response.json().catch(() => ({}));
+
+                    alert.className = 'alert error';
+                    alert.style.display = 'block';
+
+                    if (response.status === 401 || response.status === 400) {
+                        // Credenciales incorrectas
+                        alert.innerHTML = `
+                            <strong>❌ Correo o contraseña incorrectos</strong><br>
+                            Por favor, verifica tus datos e inténtalo de nuevo.
+                        `;
+                    } else {
+                        // Otro tipo de error
+                        alert.innerHTML = `
+                            <strong>❌ Error en el login</strong><br>
+                            ${data.message || 'Ha ocurrido un error. Inténtalo de nuevo.'}
+                        `;
+                    }
+
+                    // Hacer scroll al mensaje de error
+                    alert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            } catch (error) {
+                loader.classList.remove('active');
+
+                alert.className = 'alert error';
+                alert.style.display = 'block';
+
+                // Verificar si es error de red o del servidor
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    alert.innerHTML = `
+                        <strong>❌ Error de conexión</strong><br>
+                        No se pudo conectar con el servidor. Verifica tu conexión a internet.
+                    `;
+                } else if (error.message.includes('inválid')) {
+                    alert.innerHTML = `
+                        <strong>❌ Correo o contraseña incorrectos</strong><br>
+                        Por favor, verifica tus datos e inténtalo de nuevo.
+                    `;
+                } else {
+                    alert.innerHTML = `
+                        <strong>❌ Error en el login</strong><br>
+                        ${error.message}
+                    `;
+                }
+
+                // Hacer scroll al mensaje de error
+                alert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Auto-rellenar si hay credenciales guardadas
+        window.addEventListener('load', () => {
+            const savedEmail = localStorage.getItem('userEmail');
+            if (savedEmail) {
+                document.getElementById('email').value = savedEmail;
+            }
+
+            // Si ya está logueado, redirigir
+            const token = localStorage.getItem('token');
+            if (token) {
+                window.location.href = '/index.html';
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Fútbol App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 36px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .user-info.show {
+            display: block;
+        }
+
+        .user-info h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .user-info p {
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .user-email {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .menu-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-card .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .menu-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .menu-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .menu-card.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .menu-card.disabled:hover {
+            transform: none;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .guest-message {
+            text-align: center;
+            padding: 30px;
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .guest-message.show {
+            display: block;
+        }
+
+        .guest-message p {
+            color: #856404;
+            margin-bottom: 20px;
+        }
+
+        .admin-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 10px;
+        }
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background: #5568d3;
+        }
+
+        button[type="submit"]:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .response {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .response.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+
+        .response.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+
+        .response h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .response pre {
+            background: rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+
+        .token-display {
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            background: rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .loader.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            color: #0c5460;
+        }
+
+        .links {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 600;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚽ Fútbol App</h1>
+        <p class="subtitle">Gestión de Equipos y Partidos</p>
+
+        <!-- Mensaje para invitados -->
+        <div id="guestMessage" class="guest-message">
+            <p>👋 Bienvenido, invitado</p>
+            <div class="auth-buttons">
+                <a href="/login.html" class="btn btn-primary">🔑 Iniciar Sesión</a>
+                <a href="/register.html" class="btn btn-secondary">📝 Registrarse</a>
+            </div>
+        </div>
+
+        <!-- Información del usuario autenticado -->
+        <div id="userInfo" class="user-info">
+            <h3>👤 Usuario Autenticado</h3>
+            <p>Email: <span class="user-email" id="userEmail"></span></p>
+            <p>Estado: <span style="color: #28a745; font-weight: bold;">✅ Conectado</span></p>
+        </div>
+
+        <!-- Menú de navegación -->
+        <div class="menu-grid">
+            <a href="/crear-partido.html" class="menu-card" id="crearPartidoCard">
+                <div class="icon">🏆</div>
+                <h3>Crear Partido</h3>
+                <p>Crear partidos de La Liga</p>
+            </a>
+
+            <a href="/crear-alineacion.html" class="menu-card" id="crearAlineacionCard">
+                <div class="icon">⚽</div>
+                <h3>Crear Alineación</h3>
+                <p>Define tu equipo ideal</p>
+            </a>
+
+            <a href="/mis-alineaciones.html" class="menu-card" id="misAlineacionesCard">
+                <div class="icon">📋</div>
+                <h3>Mis Alineaciones</h3>
+                <p>Ver mis alineaciones creadas</p>
+            </a>
+
+            <a href="/ver-alineaciones.html" class="menu-card" id="verAlineacionesCard">
+                <div class="icon">🌟</div>
+                <h3>Ver Alineaciones</h3>
+                <p>Votar por las mejores</p>
+            </a>
+
+            <a href="/ranking.html" class="menu-card" id="rankingCard">
+                <div class="icon">🏆</div>
+                <h3>Ranking Global</h3>
+                <p>Los mejores usuarios</p>
+            </a>
+
+            <a href="/swagger-ui.html" class="menu-card">
+                <div class="icon">📚</div>
+                <h3>API Docs</h3>
+                <p>Documentación Swagger</p>
+            </a>
+
+            <a href="/actuator/health" class="menu-card">
+                <div class="icon">💚</div>
+                <h3>Health Check</h3>
+                <p>Estado del servidor</p>
+            </a>
+        </div>
+
+        <!-- Botón de cerrar sesión -->
+        <div id="logoutSection" style="display: none; text-align: center; margin-top: 20px;">
+            <button class="btn btn-danger" onclick="logout()">🚪 Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <script>
+        // Verificar autenticación al cargar
+        window.addEventListener('load', () => {
+            checkAuth();
+        });
+
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+            const userRole = localStorage.getItem('userRole');
+
+            const guestMessage = document.getElementById('guestMessage');
+            const userInfo = document.getElementById('userInfo');
+            const logoutSection = document.getElementById('logoutSection');
+            const crearPartidoCard = document.getElementById('crearPartidoCard');
+            const crearAlineacionCard = document.getElementById('crearAlineacionCard');
+            const misAlineacionesCard = document.getElementById('misAlineacionesCard');
+            const verAlineacionesCard = document.getElementById('verAlineacionesCard');
+            const rankingCard = document.getElementById('rankingCard');
+
+            if (token && userEmail) {
+                // Usuario autenticado
+                guestMessage.classList.remove('show');
+                userInfo.classList.add('show');
+                logoutSection.style.display = 'block';
+                document.getElementById('userEmail').textContent = userEmail;
+
+                // Mostrar rol con color
+                const roleSpan = document.getElementById('userRole');
+                roleSpan.textContent = userRole || 'USER';
+                roleSpan.style.color = (userRole === 'ADMIN') ? '#dc3545' : '#667eea';
+
+                // Verificar si es ADMIN para crear partidos
+                if (userRole === 'ADMIN') {
+                    crearPartidoCard.classList.remove('disabled');
+                    crearPartidoCard.onclick = null;
+                } else {
+                    // Usuario normal puede VER pero se le advertirá que solo ADMIN puede crear
+                    crearPartidoCard.classList.remove('disabled');
+                    crearPartidoCard.title = 'Puedes ver equipos pero solo ADMIN puede crear partidos';
+                }
+
+                // Crear alineación disponible para todos los usuarios autenticados
+                crearAlineacionCard.classList.remove('disabled');
+                crearAlineacionCard.onclick = null;
+
+                // Mis alineaciones disponible para todos los usuarios autenticados
+                misAlineacionesCard.classList.remove('disabled');
+                misAlineacionesCard.onclick = null;
+
+                // Ver alineaciones disponible para todos los usuarios autenticados
+                verAlineacionesCard.classList.remove('disabled');
+                verAlineacionesCard.onclick = null;
+
+                // Ranking disponible para todos los usuarios autenticados
+                rankingCard.classList.remove('disabled');
+                rankingCard.onclick = null;
+            } else {
+                // Usuario invitado
+                guestMessage.classList.add('show');
+                userInfo.classList.remove('show');
+                logoutSection.style.display = 'none';
+
+                // Deshabilitar opciones que requieren auth
+                crearPartidoCard.classList.add('disabled');
+                crearPartidoCard.onclick = (e) => {
+                    e.preventDefault();
+                    alert('⚠️ Debes iniciar sesión para acceder');
+                    window.location.href = '/login.html';
+                };
+
+                crearAlineacionCard.classList.add('disabled');
+                crearAlineacionCard.onclick = (e) => {
+                    e.preventDefault();
+                    alert('⚠️ Debes iniciar sesión para crear alineaciones');
+                    window.location.href = '/login.html';
+                };
+
+                misAlineacionesCard.classList.add('disabled');
+                misAlineacionesCard.onclick = (e) => {
+                    e.preventDefault();
+                    alert('⚠️ Debes iniciar sesión para ver tus alineaciones');
+                    window.location.href = '/login.html';
+                };
+
+                verAlineacionesCard.classList.add('disabled');
+                verAlineacionesCard.onclick = (e) => {
+                    e.preventDefault();
+                    alert('⚠️ Debes iniciar sesión para ver y votar alineaciones');
+                    window.location.href = '/login.html';
+                };
+
+                rankingCard.classList.add('disabled');
+                rankingCard.onclick = (e) => {
+                    e.preventDefault();
+                    alert('⚠️ Debes iniciar sesión para ver el ranking');
+                    window.location.href = '/login.html';
+                };
+            }
+        }
+
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userRole');
+                alert('✅ Sesión cerrada correctamente');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
+

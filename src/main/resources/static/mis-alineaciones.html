@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Alineaciones - Fútbol App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert.success {
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+            display: block !important;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            display: block !important;
+        }
+
+        .alert.warning {
+            background: #fff3cd;
+            border: 2px solid #ffeeba;
+            color: #856404;
+            display: block !important;
+        }
+
+        .alineaciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+        }
+
+        .alineacion-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .alineacion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .card-header h3 {
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .card-header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .formacion-badge {
+            display: inline-block;
+            background: #e7f3ff;
+            color: #0c5460;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .votos-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .votos-icon {
+            font-size: 18px;
+        }
+
+        .jugadores-list {
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .posicion-group {
+            margin-bottom: 15px;
+        }
+
+        .posicion-title {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .jugador-item {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .jugador-name {
+            font-weight: 500;
+        }
+
+        .jugador-number {
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Estilos para suplentes */
+        .suplentes-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .suplentes-title {
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 12px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .suplentes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .suplente-item {
+            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(118, 75, 162, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%);
+            border-radius: 8px;
+            border-left: 3px solid #764ba2;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .suplente-item .jugador-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .suplente-item .jugador-number {
+            background: #764ba2;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .no-suplentes {
+            text-align: center;
+            padding: 15px;
+            color: #999;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        .card-actions {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .empty-state {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .loader {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚽ Mis Alineaciones</h1>
+            <p>Gestiona todas tus alineaciones creadas</p>
+            <div class="header-actions">
+                <div>
+                    <button class="btn btn-secondary" onclick="window.location.href='index.html'">
+                        🏠 Volver al Inicio
+                    </button>
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="window.location.href='crear-alineacion.html'">
+                        ➕ Nueva Alineación
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <!-- Estadísticas -->
+        <div id="statsContainer" class="stats-container" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">0</div>
+                <div class="stat-label">Total Alineaciones</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statPartidos">0</div>
+                <div class="stat-label">Partidos Únicos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statEquipos">0</div>
+                <div class="stat-label">Equipos Diferentes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statVotos" style="color: #ffd700;">0</div>
+                <div class="stat-label">⭐ Votos Recibidos</div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loader" class="loader">
+            <div class="spinner"></div>
+            <p>Cargando tus alineaciones...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">📋</div>
+            <h2>No tienes alineaciones creadas</h2>
+            <p>Comienza creando tu primera alineación personalizada</p>
+            <button class="btn btn-primary" onclick="window.location.href='crear-alineacion.html'">
+                ➕ Crear Mi Primera Alineación
+            </button>
+        </div>
+
+        <!-- Alineaciones Grid -->
+        <div id="alineacionesGrid" class="alineaciones-grid" style="display: none;">
+            <!-- Se llenará dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8081/api';
+        let alineaciones = [];
+
+        // Verificar autenticación y cargar alineaciones al inicio
+        window.addEventListener('load', () => {
+            if (!verificarAuth()) return;
+            cargarAlineaciones();
+        });
+
+        function verificarAuth() {
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+
+            if (!token || !userEmail) {
+                alert('⚠️ Debes iniciar sesión para ver tus alineaciones');
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        async function cargarAlineaciones() {
+            try {
+                const response = await fetch(`${API_URL}/alineaciones/mis-alineaciones`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                // Detectar si el token ha expirado (401 o 403)
+                if (response.status === 401 || response.status === 403) {
+                    showAlert('⚠️ Tu sesión ha expirado. Redirigiendo al login...', 'error');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userEmail');
+                    localStorage.removeItem('userRole');
+                    setTimeout(() => window.location.href = 'login.html', 2000);
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('Error al cargar alineaciones');
+                }
+
+                alineaciones = await response.json();
+                console.log('Alineaciones cargadas:', alineaciones);
+
+                mostrarAlineaciones();
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('❌ Error al cargar alineaciones: ' + error.message, 'error');
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('emptyState').style.display = 'block';
+            }
+        }
+
+        function mostrarAlineaciones() {
+            const loader = document.getElementById('loader');
+            const emptyState = document.getElementById('emptyState');
+            const grid = document.getElementById('alineacionesGrid');
+            const statsContainer = document.getElementById('statsContainer');
+
+            loader.style.display = 'none';
+
+            if (alineaciones.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            // Mostrar estadísticas
+            mostrarEstadisticas();
+            statsContainer.style.display = 'grid';
+
+            // Mostrar alineaciones
+            grid.style.display = 'grid';
+            grid.innerHTML = '';
+
+            alineaciones.forEach(alineacion => {
+                const card = crearCardAlineacion(alineacion);
+                grid.appendChild(card);
+            });
+        }
+
+        function mostrarEstadisticas() {
+            const partidosUnicos = new Set(alineaciones.map(a => a.partidoId)).size;
+            const equiposUnicos = new Set(alineaciones.map(a => a.equipoId)).size;
+            const totalVotos = alineaciones.reduce((sum, a) => sum + (a.votos || 0), 0);
+
+            document.getElementById('statTotal').textContent = alineaciones.length;
+            document.getElementById('statPartidos').textContent = partidosUnicos;
+            document.getElementById('statEquipos').textContent = equiposUnicos;
+            document.getElementById('statVotos').textContent = totalVotos;
+        }
+
+        function crearCardAlineacion(alineacion) {
+            const card = document.createElement('div');
+            card.className = 'alineacion-card';
+
+            const fecha = new Date(alineacion.partidoFecha).toLocaleDateString('es-ES', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const createdAt = new Date(alineacion.createdAt).toLocaleDateString('es-ES', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+
+            // Renderizar TITULARES
+            let jugadoresHTML = '';
+            if (alineacion.alineacion && alineacion.alineacion.titulares) {
+                // Agrupar por posición
+                const posiciones = {
+                    'Goalkeeper': { icon: '🧤', label: 'Porteros', jugadores: [] },
+                    'Defender': { icon: '🛡️', label: 'Defensas', jugadores: [] },
+                    'Midfielder': { icon: '⚙️', label: 'Centrocampistas', jugadores: [] },
+                    'Attacker': { icon: '⚡', label: 'Delanteros', jugadores: [] }
+                };
+
+                alineacion.alineacion.titulares.forEach(j => {
+                    const pos = j.posicion || 'Unknown';
+                    if (posiciones[pos]) {
+                        posiciones[pos].jugadores.push(j);
+                    }
+                });
+
+                Object.values(posiciones).forEach(pos => {
+                    if (pos.jugadores.length > 0) {
+                        jugadoresHTML += `
+                            <div class="posicion-group">
+                                <div class="posicion-title">${pos.icon} ${pos.label}</div>
+                                ${pos.jugadores.map(j => `
+                                    <div class="jugador-item">
+                                        <span class="jugador-name">${j.nombre}</span>
+                                        <span class="jugador-number">#${j.numero || '?'}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            // Renderizar SUPLENTES
+            let suplientesHTML = '';
+            if (alineacion.alineacion && alineacion.alineacion.suplentes) {
+                if (alineacion.alineacion.suplentes.length > 0) {
+                    suplientesHTML = `
+                        <div class="suplentes-section">
+                            <div class="suplentes-title">🔄 Suplentes (${alineacion.alineacion.suplentes.length})</div>
+                            <div class="suplentes-grid">
+                                ${alineacion.alineacion.suplentes.map(s => `
+                                    <div class="suplente-item">
+                                        <span class="jugador-name">${s.nombre}</span>
+                                        <span class="jugador-number">#${s.numero || '?'}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    suplientesHTML = `
+                        <div class="suplentes-section">
+                            <div class="suplentes-title">🔄 Suplentes</div>
+                            <div class="no-suplentes">No se seleccionaron suplentes para esta alineación</div>
+                        </div>
+                    `;
+                }
+            }
+
+            card.innerHTML = `
+                <div class="card-header">
+                    <h3>${alineacion.partidoNombre}</h3>
+                    <p>📅 ${fecha}</p>
+                </div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <span class="info-label">Equipo:</span>
+                        <span class="info-value">${alineacion.equipoNombre}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Formación:</span>
+                        <span class="formacion-badge">${alineacion.alineacion?.formacion || 'N/A'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Votos recibidos:</span>
+                        <span class="votos-badge">
+                            <span class="votos-icon">⭐</span>
+                            ${alineacion.votos || 0}
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Creada el:</span>
+                        <span class="info-value">${createdAt}</span>
+                    </div>
+                    <div class="jugadores-list">
+                        ${jugadoresHTML}
+                        ${suplientesHTML}
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-danger" onclick="eliminarAlineacion(${alineacion.id})">
+                        🗑️ Eliminar
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        async function eliminarAlineacion(id) {
+            if (!confirm('¿Estás seguro de que deseas eliminar esta alineación?')) {
+                return;
+            }
+
+            try {
+                showAlert('🗑️ Eliminando alineación...', 'warning');
+
+                const response = await fetch(`${API_URL}/alineaciones/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Error al eliminar alineación');
+                }
+
+                showAlert('✅ Alineación eliminada exitosamente', 'success');
+
+                // Recargar alineaciones
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('❌ Error al eliminar alineación: ' + error.message, 'error');
+            }
+        }
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.className = `alert ${type}`;
+            alert.innerHTML = message;
+            alert.style.display = 'block';
+            alert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            if (type !== 'warning') {
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>

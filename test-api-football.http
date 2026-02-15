@@ -1,0 +1,170 @@
+### ============================================
+### API-FOOTBALL INTEGRATION - TEST ENDPOINTS
+### ============================================
+
+### Variables de entorno
+@baseUrl = http://localhost:8081
+@token = YOUR_JWT_TOKEN_HERE
+
+### ============================================
+### 1. AUTENTICACIÓN
+### ============================================
+
+### Registrar usuario
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@futbol.com",
+  "password": "password123"
+}
+
+### Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@futbol.com",
+  "password": "password123"
+}
+
+### ============================================
+### 2. BUSCAR EQUIPOS EN API-FOOTBALL
+### ============================================
+
+### Buscar Barcelona
+GET {{baseUrl}}/api/equipos/api-football/search?name=Barcelona
+
+### Buscar Real Madrid
+GET {{baseUrl}}/api/equipos/api-football/search?name=Real Madrid
+
+### Buscar Manchester United
+GET {{baseUrl}}/api/equipos/api-football/search?name=Manchester United
+
+### Buscar Liverpool
+GET {{baseUrl}}/api/equipos/api-football/search?name=Liverpool
+
+### Buscar Bayern Munich
+GET {{baseUrl}}/api/equipos/api-football/search?name=Bayern
+
+### ============================================
+### 3. OBTENER JUGADORES DE EQUIPOS
+### ============================================
+
+### Jugadores del Barcelona (ID: 529) - Temporada 2024
+GET {{baseUrl}}/api/equipos/api-football/team/529/players?season=2024
+
+### Jugadores del Real Madrid (ID: 541) - Temporada 2024
+GET {{baseUrl}}/api/equipos/api-football/team/541/players?season=2024
+
+### Jugadores del Manchester City (ID: 50) - Temporada 2024
+GET {{baseUrl}}/api/equipos/api-football/team/50/players?season=2024
+
+### Jugadores del PSG (ID: 85) - Temporada 2024
+GET {{baseUrl}}/api/equipos/api-football/team/85/players?season=2024
+
+### ============================================
+### 4. OBTENER ALINEACIONES DE PARTIDOS
+### ============================================
+
+### Alineaciones de un partido específico (cambiar fixtureId por uno real)
+GET {{baseUrl}}/api/equipos/api-football/fixture/867946/lineups
+
+### ============================================
+### 5. CREAR EQUIPO AUTOMÁTICAMENTE
+### ============================================
+
+### Crear equipo del Barcelona automáticamente
+POST {{baseUrl}}/api/equipos/create-from-api?apiTeamId=529&season=2024
+Authorization: Bearer {{token}}
+
+### Crear equipo del Real Madrid automáticamente
+POST {{baseUrl}}/api/equipos/create-from-api?apiTeamId=541&season=2024
+Authorization: Bearer {{token}}
+
+### Crear equipo del Liverpool automáticamente
+POST {{baseUrl}}/api/equipos/create-from-api?apiTeamId=40&season=2024
+Authorization: Bearer {{token}}
+
+### ============================================
+### 6. CREAR EQUIPO PERSONALIZADO
+### ============================================
+
+### Crear equipo personalizado del Barcelona con jugadores seleccionados
+POST {{baseUrl}}/api/equipos/create-custom
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "apiTeamId": 529,
+  "season": 2024,
+  "formation": "4-3-3",
+  "titularesIds": [306, 2128, 1459, 30701, 30846, 276, 30902, 1486, 156, 30964, 882],
+  "suplentesIds": [25759, 31086, 1531]
+}
+
+### Crear equipo personalizado del Real Madrid
+POST {{baseUrl}}/api/equipos/create-custom
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "apiTeamId": 541,
+  "season": 2024,
+  "formation": "4-4-2",
+  "titularesIds": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  "suplentesIds": [12, 13, 14]
+}
+
+### ============================================
+### 7. ACTUALIZAR ALINEACIÓN DESDE PARTIDO
+### ============================================
+
+### Actualizar alineación del equipo 1 con datos del partido 867946
+PUT {{baseUrl}}/api/equipos/1/update-lineup?fixtureId=867946
+Authorization: Bearer {{token}}
+
+### ============================================
+### EJEMPLOS DE IDs ÚTILES
+### ============================================
+
+# EQUIPOS PRINCIPALES:
+# - Barcelona: 529
+# - Real Madrid: 541
+# - Manchester United: 33
+# - Manchester City: 50
+# - Liverpool: 40
+# - Chelsea: 49
+# - Arsenal: 42
+# - Bayern Munich: 157
+# - PSG: 85
+# - Juventus: 496
+# - AC Milan: 489
+# - Inter Milan: 505
+
+# LIGAS PRINCIPALES:
+# - Premier League: 39
+# - La Liga: 140
+# - Serie A: 135
+# - Bundesliga: 78
+# - Ligue 1: 61
+# - Champions League: 2
+
+### ============================================
+### NOTAS DE USO
+### ============================================
+
+# 1. Primero registra/login para obtener el token JWT
+# 2. Reemplaza {{token}} con tu token real
+# 3. Para crear equipos personalizados, primero obtén los jugadores
+#    y anota sus IDs
+# 4. Los fixtureId cambian constantemente, consulta la API para
+#    obtener partidos actuales
+# 5. El plan gratuito tiene límite de 100 requests/día
+
+### ============================================
+### SWAGGER UI
+### ============================================
+
+### Abrir Swagger UI en el navegador
+### http://localhost:8081/swagger-ui.html

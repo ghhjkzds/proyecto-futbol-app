@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Ranking Global - Fútbol App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .trophy-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .ranking-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ranking-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .ranking-item.top-1 {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border: 3px solid #FFD700;
+        }
+
+        .ranking-item.top-2 {
+            background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%);
+            border: 3px solid #C0C0C0;
+        }
+
+        .ranking-item.top-3 {
+            background: linear-gradient(135deg, #CD7F32 0%, #B8860B 100%);
+            border: 3px solid #CD7F32;
+        }
+
+        .position {
+            font-size: 2em;
+            font-weight: bold;
+            width: 60px;
+            text-align: center;
+            color: #333;
+        }
+
+        .top-1 .position,
+        .top-2 .position,
+        .top-3 .position {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .medal {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+
+        .user-info {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .user-email {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .top-1 .user-email,
+        .top-2 .user-email,
+        .top-3 .user-email {
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-stats {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .top-1 .user-stats,
+        .top-2 .user-stats,
+        .top-3 .user-stats {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .votes-badge {
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-1 .votes-badge,
+        .top-2 .votes-badge,
+        .top-3 .votes-badge {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f5c6cb;
+            margin-bottom: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 1.3em;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            min-width: 150px;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .ranking-item {
+                padding: 15px;
+            }
+
+            .position {
+                font-size: 1.5em;
+                width: 45px;
+            }
+
+            .medal {
+                font-size: 2em;
+            }
+
+            .user-email {
+                font-size: 1.1em;
+            }
+
+            .votes-badge {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Volver al Inicio</a>
+
+        <div class="header">
+            <div class="trophy-icon">🏆</div>
+            <h1>Ranking Global de Usuarios</h1>
+            <p class="subtitle">Los mejores creadores de alineaciones</p>
+        </div>
+
+        <div id="stats-summary" class="stats-summary" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="total-usuarios">0</div>
+                <div class="stat-label">Usuarios Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-votos">0</div>
+                <div class="stat-label">Votos Totales</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-alineaciones">0</div>
+                <div class="stat-label">Alineaciones Creadas</div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Cargando ranking...</p>
+        </div>
+
+        <div id="error-container"></div>
+
+        <div class="ranking-card" id="ranking-container" style="display: none;">
+            <div id="ranking-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api/alineaciones';
+        let jwtToken = localStorage.getItem('token');
+
+        // Verificar autenticación
+        if (!jwtToken) {
+            window.location.href = 'login.html';
+        }
+
+        // Cargar ranking al cargar la página
+        document.addEventListener('DOMContentLoaded', cargarRanking);
+
+        async function cargarRanking() {
+            const loadingElement = document.getElementById('loading');
+            const rankingContainer = document.getElementById('ranking-container');
+            const errorContainer = document.getElementById('error-container');
+            const statsSummary = document.getElementById('stats-summary');
+
+            try {
+                loadingElement.style.display = 'block';
+                rankingContainer.style.display = 'none';
+                errorContainer.innerHTML = '';
+                statsSummary.style.display = 'none';
+
+                const response = await fetch(`${API_BASE}/ranking`, {
+                    headers: {
+                        'Authorization': `Bearer ${jwtToken}`
+                    }
+                });
+
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('Error al cargar el ranking');
+                }
+
+                const ranking = await response.json();
+
+                loadingElement.style.display = 'none';
+
+                if (ranking.length === 0) {
+                    rankingContainer.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📊</div>
+                            <div class="empty-state-text">Aún no hay usuarios en el ranking</div>
+                            <p style="margin-top: 15px; color: #999;">Sé el primero en crear alineaciones y recibir votos</p>
+                        </div>
+                    `;
+                    rankingContainer.style.display = 'block';
+                    return;
+                }
+
+                // Mostrar estadísticas generales
+                mostrarEstadisticas(ranking);
+                statsSummary.style.display = 'flex';
+
+                // Mostrar ranking
+                mostrarRanking(ranking);
+                rankingContainer.style.display = 'block';
+
+            } catch (error) {
+                console.error('Error al cargar ranking:', error);
+                loadingElement.style.display = 'none';
+                errorContainer.innerHTML = `
+                    <div class="error">
+                        <strong>⚠️ Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function mostrarEstadisticas(ranking) {
+            const totalUsuarios = ranking.length;
+            const totalVotos = ranking.reduce((sum, user) => sum + user.totalVotos, 0);
+            const totalAlineaciones = ranking.reduce((sum, user) => sum + user.totalAlineaciones, 0);
+
+            document.getElementById('total-usuarios').textContent = totalUsuarios;
+            document.getElementById('total-votos').textContent = totalVotos.toLocaleString();
+            document.getElementById('total-alineaciones').textContent = totalAlineaciones.toLocaleString();
+        }
+
+        function mostrarRanking(ranking) {
+            const rankingList = document.getElementById('ranking-list');
+
+            rankingList.innerHTML = ranking.map((usuario, index) => {
+                const posicion = index + 1;
+                const medalla = obtenerMedalla(posicion);
+                const claseTop = obtenerClaseTop(posicion);
+
+                return `
+                    <div class="ranking-item ${claseTop}">
+                        ${medalla ? `<div class="medal">${medalla}</div>` : ''}
+                        <div class="position">${medalla ? '' : `#${posicion}`}</div>
+                        <div class="user-info">
+                            <div class="user-email">${escapeHtml(usuario.email)}</div>
+                            <div class="user-stats">
+                                📋 ${usuario.totalAlineaciones} alineación${usuario.totalAlineaciones !== 1 ? 'es' : ''}
+                            </div>
+                        </div>
+                        <div class="votes-badge">
+                            <span>⭐</span>
+                            <span>${usuario.totalVotos.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function obtenerMedalla(posicion) {
+            const medallas = {
+                1: '🥇',
+                2: '🥈',
+                3: '🥉'
+            };
+            return medallas[posicion] || null;
+        }
+
+        function obtenerClaseTop(posicion) {
+            if (posicion === 1) return 'top-1';
+            if (posicion === 2) return 'top-2';
+            if (posicion === 3) return 'top-3';
+            return '';
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>
+
