@@ -278,7 +278,15 @@ proyecto-ACD/
 ├── src/main/resources/
 │   ├── application.properties
 │   └── static/            # Recursos estáticos
-├── docs/                  # Documentación
+├── scripts-sql/           # Scripts SQL (migraciones, datos, fixes)
+│   ├── datos-prueba.sql
+│   ├── gestionar-roles.sql
+│   ├── agregar-*.sql
+│   ├── fix-*.sql
+│   ├── recrear-*.sql
+│   ├── verificar-*.sql
+│   └── diagnostico-*.sql
+├── Documentos-Explicativos/ # Documentación técnica
 └── pom.xml               # Dependencias Maven
 ```
 
