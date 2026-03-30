@@ -15,7 +15,6 @@ public class EquipoDTO {
     private Integer userId;
     private String userEmail;
     private String nombre;
-    private Integer votos;
     private EquipoDetalles alineacion;
     private LocalDateTime createdAt;
 }

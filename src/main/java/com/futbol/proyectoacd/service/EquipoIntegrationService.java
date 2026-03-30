@@ -57,7 +57,6 @@ public class EquipoIntegrationService {
         Equipo equipo = new Equipo();
         equipo.setNombre(teamData.getTeam().getName());
         equipo.setUser(user);
-        equipo.setVotos(0);
         equipo.setAlineacion(alineacion);
 
         // 5. Guardar en BD
@@ -187,7 +186,6 @@ public class EquipoIntegrationService {
         Equipo equipo = new Equipo();
         equipo.setNombre(teamData.getTeam().getName());
         equipo.setUser(user);
-        equipo.setVotos(0);
         equipo.setAlineacion(alineacion);
 
         equipo = equipoRepository.save(equipo);

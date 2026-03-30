@@ -189,7 +189,6 @@ public class PartidoController {
         Equipo nuevoEquipo = new Equipo();
         nuevoEquipo.setNombre(nombre);
         nuevoEquipo.setUser(user);
-        nuevoEquipo.setVotos(0);
 
         Equipo equipoGuardado = equipoRepository.save(nuevoEquipo);
         log.info("Equipo creado exitosamente: {} (ID: {})", nombre, equipoGuardado.getId());

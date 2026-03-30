@@ -199,22 +199,6 @@
             font-size: 14px;
         }
 
-        .votos-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #333;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .votos-icon {
-            font-size: 18px;
-        }
 
         .jugadores-list {
             margin-top: 15px;
@@ -434,10 +418,6 @@
                 <div class="stat-value" id="statEquipos">0</div>
                 <div class="stat-label">Equipos Diferentes</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="statVotos" style="color: #ffd700;">0</div>
-                <div class="stat-label">⭐ Votos Recibidos</div>
-            </div>
         </div>
 
         <!-- Loading -->
@@ -548,12 +528,10 @@
         function mostrarEstadisticas() {
             const partidosUnicos = new Set(alineaciones.map(a => a.partidoId)).size;
             const equiposUnicos = new Set(alineaciones.map(a => a.equipoId)).size;
-            const totalVotos = alineaciones.reduce((sum, a) => sum + (a.votos || 0), 0);
 
             document.getElementById('statTotal').textContent = alineaciones.length;
             document.getElementById('statPartidos').textContent = partidosUnicos;
             document.getElementById('statEquipos').textContent = equiposUnicos;
-            document.getElementById('statVotos').textContent = totalVotos;
         }
 
         function crearCardAlineacion(alineacion) {
@@ -649,13 +627,6 @@
                     <div class="info-row">
                         <span class="info-label">Formación:</span>
                         <span class="formacion-badge">${alineacion.alineacion?.formacion || 'N/A'}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Votos recibidos:</span>
-                        <span class="votos-badge">
-                            <span class="votos-icon">⭐</span>
-                            ${alineacion.votos || 0}
-                        </span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">Creada el:</span>

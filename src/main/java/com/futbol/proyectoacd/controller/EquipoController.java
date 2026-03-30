@@ -168,7 +168,6 @@ public class EquipoController {
                 equipo.getUser().getId(),
                 equipo.getUser().getEmail(),
                 equipo.getNombre(),
-                equipo.getVotos(),
                 equipo.getAlineacion(),
                 equipo.getCreatedAt()
         );

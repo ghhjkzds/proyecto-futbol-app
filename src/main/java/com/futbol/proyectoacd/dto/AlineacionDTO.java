@@ -17,7 +17,6 @@ public class AlineacionDTO {
     private LocalDateTime partidoFecha;
     private Integer equipoId;
     private String equipoNombre;
-    private Integer votos; // Votos de esta alineación específica
     private EquipoDetalles alineacion;
     private LocalDateTime createdAt;
     private String createdBy;

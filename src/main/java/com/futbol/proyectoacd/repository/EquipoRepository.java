@@ -11,6 +11,5 @@ import java.util.Optional;
 @Repository
 public interface EquipoRepository extends JpaRepository<Equipo, Integer> {
     List<Equipo> findByUser(User user);
-    List<Equipo> findByOrderByVotosDesc();
     Optional<Equipo> findByNombre(String nombre);
 }

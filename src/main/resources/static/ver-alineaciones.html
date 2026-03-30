@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ver Alineaciones del Partido - ⚽ Futbol App</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,10 +14,7 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1400px; margin: 0 auto; }
 
         .header {
             background: white;
@@ -36,13 +29,7 @@
             gap: 15px;
         }
 
-        .header h1 {
-            color: #667eea;
-            font-size: 28px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .header h1 { color: #667eea; font-size: 28px; }
 
         .btn {
             padding: 10px 20px;
@@ -55,25 +42,10 @@
             display: inline-block;
         }
 
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
+        .btn-primary  { background: #667eea; color: white; }
+        .btn-primary:hover  { background: #5568d3; transform: translateY(-2px); }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; }
 
         .partido-selector {
             background: white;
@@ -83,11 +55,7 @@
             margin-bottom: 30px;
         }
 
-        .partido-selector h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
+        .partido-selector h2 { color: #333; margin-bottom: 15px; font-size: 20px; }
 
         select {
             width: 100%;
@@ -98,10 +66,7 @@
             transition: border-color 0.3s;
         }
 
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+        select:focus { outline: none; border-color: #667eea; }
 
         .partido-info {
             background: white;
@@ -112,16 +77,8 @@
             text-align: center;
         }
 
-        .partido-info h2 {
-            color: #667eea;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .partido-info .fecha {
-            color: #666;
-            font-size: 16px;
-        }
+        .partido-info h2 { color: #667eea; font-size: 32px; margin-bottom: 10px; }
+        .partido-info .fecha { color: #666; font-size: 16px; }
 
         .stats {
             display: grid;
@@ -138,16 +95,8 @@
             text-align: center;
         }
 
-        .stat-value {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+        .stat-value { font-size: 32px; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { font-size: 14px; opacity: 0.9; }
 
         .equipos-section {
             display: grid;
@@ -156,11 +105,7 @@
             margin-bottom: 30px;
         }
 
-        @media (max-width: 1024px) {
-            .equipos-section {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 1024px) { .equipos-section { grid-template-columns: 1fr; } }
 
         .equipo-container {
             background: white;
@@ -176,12 +121,7 @@
             margin-bottom: 20px;
         }
 
-        .equipo-header h3 {
-            color: #667eea;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
+        .equipo-header h3 { color: #667eea; font-size: 24px; margin-bottom: 5px; }
         .equipo-header .badge {
             background: #f0f0f0;
             color: #666;
@@ -204,18 +144,12 @@
         .alineacion-card::after {
             content: '👆 Click para ver jugadores';
             position: absolute;
-            bottom: 10px;
-            right: 15px;
-            font-size: 11px;
-            color: #999;
-            font-style: italic;
-            opacity: 0;
-            transition: opacity 0.3s;
+            bottom: 10px; right: 15px;
+            font-size: 11px; color: #999; font-style: italic;
+            opacity: 0; transition: opacity 0.3s;
         }
 
-        .alineacion-card:hover::after {
-            opacity: 1;
-        }
+        .alineacion-card:hover::after { opacity: 1; }
 
         .alineacion-card:hover {
             border-color: #667eea;
@@ -223,98 +157,26 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
         }
 
-        .alineacion-card.expanded {
-            border-color: #667eea;
-            background: white;
-        }
-
-        .alineacion-card.expanded::after {
-            content: '👆 Click para ocultar';
-            opacity: 0.7;
-        }
+        .alineacion-card.expanded { border-color: #667eea; background: white; }
+        .alineacion-card.expanded::after { content: '👆 Click para ocultar'; opacity: 0.7; }
 
         .alineacion-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #dee2e6;
         }
 
-        .alineacion-user {
-            color: #666;
-            font-size: 14px;
-        }
+        .alineacion-user { color: #555; font-size: 14px; font-weight: 500; }
 
-        .votos-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .votos-count {
-            background: #667eea;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .btn-votar {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-votar:hover {
-            background: #218838;
-            transform: scale(1.05);
-        }
-
-        .btn-votar:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .formacion-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .posicion-group {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-
-        .posicion-group h4 {
+        .toggle-icon {
+            transition: transform 0.3s;
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 18px;
             color: #667eea;
-            font-size: 14px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
         }
 
-        .jugador-item {
-            background: #f8f9fa;
-            padding: 8px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #333;
-        }
+        .alineacion-card.expanded .toggle-icon { transform: rotate(180deg); }
 
         .alineacion-details {
             display: none;
@@ -324,9 +186,7 @@
             animation: slideDown 0.3s ease-out;
         }
 
-        .alineacion-details.visible {
-            display: block;
-        }
+        .alineacion-details.visible { display: block; }
 
         .formacion-badge {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -346,7 +206,7 @@
         }
 
         .posicion-detalle {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(102,126,234,0.05) 0%, rgba(118,75,162,0.05) 100%);
             padding: 15px;
             border-radius: 10px;
             border-left: 4px solid #667eea;
@@ -356,9 +216,6 @@
             color: #667eea;
             font-size: 16px;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .jugador-detalle {
@@ -373,377 +230,51 @@
             transition: all 0.2s;
         }
 
-        .jugador-detalle:hover {
-            transform: translateX(5px);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        }
+        .jugador-detalle:hover { transform: translateX(5px); box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
 
         .jugador-numero {
             background: #667eea;
             color: white;
-            width: 30px;
-            height: 30px;
+            width: 30px; height: 30px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 14px; flex-shrink: 0;
         }
 
-        .jugador-nombre {
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-            flex: 1;
-        }
+        .jugador-nombre { color: #333; font-weight: 500; font-size: 14px; flex: 1; }
 
-        .toggle-icon {
-            transition: transform 0.3s;
-            display: inline-block;
-            margin-left: 10px;
-            font-size: 18px;
-            color: #667eea;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: #666; }
+        .empty-state-icon { font-size: 64px; margin-bottom: 20px; }
+        .empty-state h3 { color: #333; margin-bottom: 10px; font-size: 24px; }
 
-        .alineacion-card.expanded .toggle-icon {
-            transform: rotate(180deg);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-        }
-
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        .loader {
-            text-align: center;
-            padding: 60px 20px;
-            color: white;
-        }
+        .loader { text-align: center; padding: 60px 20px; color: white; }
 
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 4px solid rgba(255,255,255,0.3);
             border-top: 4px solid white;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin    { 0% { transform: rotate(0deg); }   100% { transform: rotate(360deg); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .alert {
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .rank-badge {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            color: white;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-
-        .rank-1 { background: #ffd700; color: #333; }
-        .rank-2 { background: #c0c0c0; color: #333; }
-        .rank-3 { background: #cd7f32; color: white; }
-        .rank-other { background: #6c757d; }
-
-        /* Estilos para comentarios */
-        .comentarios-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e9ecef;
-        }
-
-        .comentarios-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .comentarios-header h3 {
-            color: #667eea;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-toggle-comentarios {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .btn-toggle-comentarios:hover {
-            background: #5568d3;
-        }
-
-        .comentarios-container {
-            display: none;
-        }
-
-        .comentarios-container.visible {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .comentario-form {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .comentario-form textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 80px;
-            transition: border-color 0.3s;
-        }
-
-        .comentario-form textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .comentario-form .btn-enviar {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-
-        .comentario-form .btn-enviar:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-        }
-
-        .comentario-form .btn-enviar:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .comentarios-lista {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .comentario {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .comentario-header-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .comentario-autor {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 14px;
-        }
-
-        .comentario-fecha {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .comentario-mensaje {
-            color: #333;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .comentario-acciones {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-responder {
-            background: transparent;
-            color: #667eea;
-            border: 1px solid #667eea;
-            padding: 5px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-
-        .btn-responder:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .respuestas {
-            margin-top: 15px;
-            margin-left: 30px;
-            padding-left: 15px;
-            border-left: 2px solid #e9ecef;
-        }
-
-        .respuesta {
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 3px solid #764ba2;
-        }
-
-        .respuesta .comentario-autor {
-            color: #764ba2;
-        }
-
-        .formulario-respuesta {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            border: 2px solid #667eea;
-        }
-
-        .formulario-respuesta textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 13px;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 60px;
-        }
-
-        .formulario-respuesta .acciones {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .formulario-respuesta .btn-enviar-respuesta {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
-
-        .formulario-respuesta .btn-enviar-respuesta:hover {
-            background: #5568d3;
-        }
-
-        .formulario-respuesta .btn-cancelar {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
-
-        .formulario-respuesta .btn-cancelar:hover {
-            background: #5a6268;
-        }
-
-        .no-comentarios {
-            text-align: center;
-            padding: 30px;
-            color: #999;
-            font-style: italic;
-        }
+        .alert { padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; animation: slideDown 0.3s ease-out; }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>⚽ Ver Alineaciones del Partido</h1>
-            <div>
-                <a href="index.html" class="btn btn-secondary">← Volver al Inicio</a>
-            </div>
+            <a href="index.html" class="btn btn-secondary">← Volver al Inicio</a>
         </div>
 
         <div id="alertContainer"></div>
 
-        <!-- Selector de Partido -->
         <div class="partido-selector">
             <h2>📋 Selecciona un partido</h2>
             <select id="partidoSelect">
@@ -751,93 +282,58 @@
             </select>
         </div>
 
-        <!-- Loading -->
         <div id="loader" class="loader" style="display: none;">
             <div class="spinner"></div>
             <p>Cargando alineaciones...</p>
         </div>
 
-        <!-- Info del Partido -->
         <div id="partidoInfo" style="display: none;"></div>
 
-        <!-- Sección de Equipos -->
         <div id="equiposSection" class="equipos-section" style="display: none;"></div>
 
-        <!-- Empty State -->
         <div id="emptyState" class="empty-state" style="display: none;">
             <div class="empty-state-icon">📋</div>
             <h3>No hay alineaciones para este partido</h3>
             <p>Sé el primero en crear una alineación para este partido</p>
-            <a href="crear-alineacion.html" class="btn btn-primary" style="margin-top: 20px;">
-                ➕ Crear Alineación
-            </a>
+            <a href="crear-alineacion.html" class="btn btn-primary" style="margin-top: 20px;">➕ Crear Alineación</a>
         </div>
     </div>
 
     <script>
         const API_BASE_URL = 'http://localhost:8081/api';
-        let partidoActual = null;
-        let votosRealizados = new Set(); // Para rastrear votos (en memoria)
 
-        // Cargar votos realizados del localStorage
-        function cargarVotosRealizados() {
-            const votos = localStorage.getItem('votosRealizados');
-            if (votos) {
-                votosRealizados = new Set(JSON.parse(votos));
-            }
-        }
-
-        // Guardar votos realizados en localStorage
-        function guardarVotosRealizados() {
-            localStorage.setItem('votosRealizados', JSON.stringify([...votosRealizados]));
-        }
-
-        // Verificar autenticación
+        // ── Autenticación ──────────────────────────────────────────────
         function verificarAutenticacion() {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                window.location.href = 'login.html';
-                return false;
-            }
+            if (!localStorage.getItem('token')) { window.location.href = 'login.html'; return false; }
             return true;
         }
 
-        // Mostrar alerta
-        function mostrarAlerta(mensaje, tipo = 'success') {
-            const alertContainer = document.getElementById('alertContainer');
-            const alert = document.createElement('div');
-            alert.className = `alert alert-${tipo}`;
-            alert.textContent = mensaje;
-            alertContainer.appendChild(alert);
-
-            setTimeout(() => {
-                alert.remove();
-            }, 5000);
+        function redirigirLogin() {
+            mostrarAlerta('⚠️ Tu sesión ha expirado. Redirigiendo...', 'error');
+            ['token', 'userEmail', 'userRole'].forEach(k => localStorage.removeItem(k));
+            setTimeout(() => window.location.href = 'login.html', 2000);
         }
 
-        // Cargar partidos
+        // ── Alertas ────────────────────────────────────────────────────
+        function mostrarAlerta(mensaje, tipo = 'success') {
+            const el = document.createElement('div');
+            el.className = `alert alert-${tipo}`;
+            el.textContent = mensaje;
+            document.getElementById('alertContainer').appendChild(el);
+            setTimeout(() => el.remove(), 5000);
+        }
+
+        // ── Cargar partidos ────────────────────────────────────────────
         async function cargarPartidos() {
             try {
-                const token = localStorage.getItem('token');
-                const response = await fetch(`${API_BASE_URL}/partidos`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
+                const res = await fetch(`${API_BASE_URL}/partidos`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                 });
 
-                // Detectar si el token ha expirado (401 o 403)
-                if (response.status === 401 || response.status === 403) {
-                    mostrarAlerta('⚠️ Tu sesión ha expirado. Redirigiendo al login...', 'error');
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('userEmail');
-                    localStorage.removeItem('userRole');
-                    setTimeout(() => window.location.href = 'login.html', 2000);
-                    return;
-                }
+                if (res.status === 401 || res.status === 403) { redirigirLogin(); return; }
+                if (!res.ok) throw new Error('Error al cargar partidos');
 
-                if (!response.ok) throw new Error('Error al cargar partidos');
-
-                const partidos = await response.json();
+                const partidos = await res.json();
                 const select = document.getElementById('partidoSelect');
 
                 if (partidos.length === 0) {
@@ -846,693 +342,182 @@
                 }
 
                 select.innerHTML = '<option value="">-- Selecciona un partido --</option>';
-                partidos.forEach(partido => {
-                    const option = document.createElement('option');
-                    option.value = partido.id;
-                    option.textContent = `${partido.equipoLocalNombre} vs ${partido.equipoVisitanteNombre} - ${new Date(partido.fecha).toLocaleDateString('es-ES')}`;
-                    select.appendChild(option);
+                partidos.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.equipoLocalNombre} vs ${p.equipoVisitanteNombre} - ${new Date(p.fecha).toLocaleDateString('es-ES')}`;
+                    select.appendChild(opt);
                 });
-            } catch (error) {
-                console.error('Error:', error);
+            } catch (e) {
                 mostrarAlerta('Error al cargar partidos', 'error');
             }
         }
 
-        // Cargar alineaciones del partido
+        // ── Cargar alineaciones ────────────────────────────────────────
         async function cargarAlineaciones(partidoId) {
-            const loader = document.getElementById('loader');
-            const partidoInfo = document.getElementById('partidoInfo');
+            const loader         = document.getElementById('loader');
+            const partidoInfo    = document.getElementById('partidoInfo');
             const equiposSection = document.getElementById('equiposSection');
-            const emptyState = document.getElementById('emptyState');
+            const emptyState     = document.getElementById('emptyState');
+
+            loader.style.display = 'block';
+            partidoInfo.style.display = equiposSection.style.display = emptyState.style.display = 'none';
 
             try {
-                console.log('🔄 Cargando alineaciones para partido ID:', partidoId);
-
-                loader.style.display = 'block';
-                partidoInfo.style.display = 'none';
-                equiposSection.style.display = 'none';
-                emptyState.style.display = 'none';
-
-                const token = localStorage.getItem('token');
-                console.log('🔑 Token presente:', !!token);
-
-                const url = `${API_BASE_URL}/alineaciones/partido/${partidoId}`;
-                console.log('🌐 Llamando a:', url);
-
-                const response = await fetch(url, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
+                const res = await fetch(`${API_BASE_URL}/alineaciones/partido/${partidoId}`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                 });
 
-                console.log('📡 Respuesta recibida - Status:', response.status);
+                if (res.status === 401 || res.status === 403) { loader.style.display = 'none'; redirigirLogin(); return; }
+                if (!res.ok) throw new Error('Error al cargar alineaciones: ' + res.status);
 
-                // Detectar si el token ha expirado (401 o 403)
-                if (response.status === 401 || response.status === 403) {
-                    loader.style.display = 'none';
-                    console.error('❌ Token expirado o sin permisos');
-                    mostrarAlerta('⚠️ Tu sesión ha expirado. Redirigiendo al login...', 'error');
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('userEmail');
-                    localStorage.removeItem('userRole');
-                    setTimeout(() => window.location.href = 'login.html', 2000);
-                    return;
-                }
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('❌ Error en la respuesta:', errorText);
-                    throw new Error('Error al cargar alineaciones: ' + response.status);
-                }
-
-                const data = await response.json();
-                console.log('📦 Datos recibidos:', data);
-                console.log('📊 Total alineaciones:', data.totalAlineaciones);
-                console.log('🎯 Alineaciones por equipo:', data.alineaciones);
-
-                partidoActual = data.partido;
-
+                const data = await res.json();
                 loader.style.display = 'none';
 
-                // Mostrar info del partido
                 mostrarInfoPartido(data.partido, data.totalAlineaciones);
 
-                // Mostrar alineaciones
                 if (data.totalAlineaciones === 0) {
-                    console.log('ℹ️ No hay alineaciones para este partido');
                     emptyState.style.display = 'block';
                 } else {
-                    console.log('✅ Mostrando', data.totalAlineaciones, 'alineaciones');
                     mostrarAlineaciones(data.alineaciones, data.partido);
                 }
-            } catch (error) {
-                console.error('💥 Error completo:', error);
+            } catch (e) {
                 loader.style.display = 'none';
-                mostrarAlerta('❌ Error al cargar alineaciones del partido: ' + error.message, 'error');
+                mostrarAlerta('❌ ' + e.message, 'error');
             }
         }
 
-        // Mostrar info del partido
-        function mostrarInfoPartido(partido, totalAlineaciones) {
-            const partidoInfo = document.getElementById('partidoInfo');
-            partidoInfo.style.display = 'block';
-            partidoInfo.className = 'partido-info';
-            partidoInfo.innerHTML = `
+        // ── Info del partido ───────────────────────────────────────────
+        function mostrarInfoPartido(partido, total) {
+            const el = document.getElementById('partidoInfo');
+            el.style.display = 'block';
+            el.className = 'partido-info';
+            el.innerHTML = `
                 <h2>${partido.equipoLocal} vs ${partido.equipoVisitante}</h2>
                 <div class="fecha">📅 ${new Date(partido.fecha).toLocaleString('es-ES', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit'
                 })}</div>
                 <div class="stats">
                     <div class="stat-card">
-                        <div class="stat-value">${totalAlineaciones}</div>
+                        <div class="stat-value">${total}</div>
                         <div class="stat-label">Total Alineaciones</div>
                     </div>
-                </div>
-            `;
+                </div>`;
         }
 
-        // Mostrar alineaciones
+        // ── Mostrar por equipo ─────────────────────────────────────────
         function mostrarAlineaciones(alineacionesPorEquipo, partido) {
-            const equiposSection = document.getElementById('equiposSection');
-            equiposSection.style.display = 'grid';
-            equiposSection.innerHTML = '';
-
-            // Crear sección para equipo local
-            const equipoLocalDiv = crearSeccionEquipo(
-                partido.equipoLocal,
-                alineacionesPorEquipo[partido.equipoLocal] || []
-            );
-            equiposSection.appendChild(equipoLocalDiv);
-
-            // Crear sección para equipo visitante
-            const equipoVisitanteDiv = crearSeccionEquipo(
-                partido.equipoVisitante,
-                alineacionesPorEquipo[partido.equipoVisitante] || []
-            );
-            equiposSection.appendChild(equipoVisitanteDiv);
+            const sec = document.getElementById('equiposSection');
+            sec.style.display = 'grid';
+            sec.innerHTML = '';
+            sec.appendChild(crearSeccionEquipo(partido.equipoLocal,     alineacionesPorEquipo[partido.equipoLocal]     || []));
+            sec.appendChild(crearSeccionEquipo(partido.equipoVisitante, alineacionesPorEquipo[partido.equipoVisitante] || []));
         }
 
-        // Crear sección de equipo
-        function crearSeccionEquipo(nombreEquipo, alineaciones) {
-            const container = document.createElement('div');
-            container.className = 'equipo-container';
-
-            const header = document.createElement('div');
-            header.className = 'equipo-header';
-            header.innerHTML = `
-                <h3>${nombreEquipo}</h3>
-                <span class="badge">${alineaciones.length} alineaciones</span>
-            `;
-            container.appendChild(header);
+        function crearSeccionEquipo(nombre, alineaciones) {
+            const div = document.createElement('div');
+            div.className = 'equipo-container';
+            div.innerHTML = `
+                <div class="equipo-header">
+                    <h3>${nombre}</h3>
+                    <span class="badge">${alineaciones.length} alineación${alineaciones.length !== 1 ? 'es' : ''}</span>
+                </div>`;
 
             if (alineaciones.length === 0) {
-                const empty = document.createElement('div');
-                empty.className = 'empty-state';
-                empty.innerHTML = `
-                    <div class="empty-state-icon">🤷</div>
-                    <p>No hay alineaciones para este equipo</p>
-                `;
-                container.appendChild(empty);
+                div.innerHTML += `<div class="empty-state"><div class="empty-state-icon">🤷</div><p>No hay alineaciones para este equipo</p></div>`;
             } else {
-                alineaciones.forEach((alineacion, index) => {
-                    const card = crearCardAlineacion(alineacion, index + 1);
-                    container.appendChild(card);
-                });
+                alineaciones.forEach(a => div.appendChild(crearCardAlineacion(a)));
             }
-
-            return container;
+            return div;
         }
 
-        // Crear card de alineación
-        function crearCardAlineacion(alineacion, rank) {
-            console.log(`🃏 Creando card para alineación ID ${alineacion.id}, Rank #${rank}`);
-            console.log('   - Usuario:', alineacion.createdBy);
-            console.log('   - Equipo:', alineacion.equipoNombre);
-            console.log('   - Votos:', alineacion.votos);
-            console.log('   - Tiene alineación:', !!alineacion.alineacion);
-
+        // ── Card de alineación ─────────────────────────────────────────
+        function crearCardAlineacion(alineacion) {
             const card = document.createElement('div');
             card.className = 'alineacion-card';
-            card.setAttribute('data-alineacion-id', alineacion.id);
-
-            // Agregar evento click directamente al elemento DOM
-            card.addEventListener('click', function(e) {
-                console.log('🖱️ Click en alineación ID:', alineacion.id);
-                toggleDetalles(card);
-            });
-
-            const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-other';
-
-            const yaVotado = votosRealizados.has(alineacion.id);
-            const votos = alineacion.votos || 0;
-
+            card.addEventListener('click', () => toggleDetalles(card));
             card.innerHTML = `
                 <div class="alineacion-header" onclick="event.stopPropagation()">
-                    <div>
-                        <span class="rank-badge ${rankClass}">#${rank}</span>
-                        <span class="alineacion-user">👤 ${alineacion.createdBy}</span>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="votos-section">
-                        <span class="votos-count">⭐ ${votos} votos</span>
-                        <button class="btn-votar" onclick="event.stopPropagation(); votarAlineacion(${alineacion.id});" ${yaVotado ? 'disabled' : ''}>
-                            ${yaVotado ? '✓ Votado' : '👍 Votar'}
-                        </button>
-                    </div>
+                    <span class="alineacion-user">👤 ${alineacion.createdBy}</span>
+                    <span class="toggle-icon">▼</span>
                 </div>
                 <div class="alineacion-details">
                     ${renderDetallesAlineacion(alineacion.alineacion)}
-                    ${renderComentariosSection(alineacion.id)}
-                </div>
-            `;
-
-            console.log('✅ Card creada correctamente');
+                </div>`;
             return card;
         }
 
-        // Toggle detalles de alineación
         function toggleDetalles(card) {
-            console.log('🔄 Toggle detalles llamado');
             const wasExpanded = card.classList.contains('expanded');
-            console.log('   - Estaba expandida:', wasExpanded);
-
-            // Cerrar todas las demás tarjetas
-            const allCards = document.querySelectorAll('.alineacion-card');
-            console.log('   - Total de cards en página:', allCards.length);
-
-            allCards.forEach(c => {
+            document.querySelectorAll('.alineacion-card').forEach(c => {
                 c.classList.remove('expanded');
-                const details = c.querySelector('.alineacion-details');
-                if (details) {
-                    details.classList.remove('visible');
-                }
+                const d = c.querySelector('.alineacion-details');
+                if (d) d.classList.remove('visible');
             });
-
-            // Si no estaba expandida, expandir esta
             if (!wasExpanded) {
-                console.log('   ➡️ Expandiendo card');
                 card.classList.add('expanded');
-                const details = card.querySelector('.alineacion-details');
-                if (details) {
-                    details.classList.add('visible');
-                    console.log('   ✅ Detalles ahora visibles');
-                } else {
-                    console.error('   ❌ No se encontró elemento .alineacion-details');
-                }
-            } else {
-                console.log('   ⬅️ Colapsando card');
+                const d = card.querySelector('.alineacion-details');
+                if (d) d.classList.add('visible');
             }
         }
 
-        // Renderizar detalles de alineación
+        // ── Renderizar detalles ────────────────────────────────────────
         function renderDetallesAlineacion(alineacion) {
-            if (!alineacion) return '<p style="text-align: center; color: #999;">Sin información de alineación disponible</p>';
+            if (!alineacion) return '<p style="text-align:center;color:#999;">Sin información disponible</p>';
 
-            const formacion = alineacion.formacion || 'N/A';
+            let html = `<div class="formacion-badge">⚽ Formación: ${alineacion.formacion || 'N/A'}</div><div class="jugadores-grid">`;
 
-            // Determinar estructura basada en el formato de datos
-            let html = `<div class="formacion-badge">⚽ Formación: ${formacion}</div>`;
-            html += '<div class="jugadores-grid">';
-
-            // Verificar si tiene la estructura nueva (titulares) o antigua (por posiciones)
             if (alineacion.titulares && Array.isArray(alineacion.titulares)) {
-                // Nueva estructura: agrupar jugadores por posición
-                const jugadoresPorPosicion = {
-                    'Goalkeeper': { label: '🧤 Porteros', jugadores: [] },
-                    'Defender': { label: '🛡️ Defensas', jugadores: [] },
+                const grupos = {
+                    'Goalkeeper': { label: '🧤 Porteros',        jugadores: [] },
+                    'Defender':   { label: '🛡️ Defensas',        jugadores: [] },
                     'Midfielder': { label: '⚙️ Centrocampistas', jugadores: [] },
-                    'Attacker': { label: '⚡ Delanteros', jugadores: [] }
+                    'Attacker':   { label: '⚡ Delanteros',      jugadores: [] }
                 };
-
-                alineacion.titulares.forEach(jugador => {
-                    const posicion = jugador.posicion || 'Unknown';
-                    if (jugadoresPorPosicion[posicion]) {
-                        jugadoresPorPosicion[posicion].jugadores.push(jugador);
-                    }
-                });
-
-                // Renderizar cada posición
-                Object.entries(jugadoresPorPosicion).forEach(([key, grupo]) => {
-                    if (grupo.jugadores.length > 0) {
-                        html += `
-                            <div class="posicion-detalle">
-                                <h4>${grupo.label}</h4>
-                                ${grupo.jugadores.map(jugador => `
-                                    <div class="jugador-detalle">
-                                        <div class="jugador-numero">${jugador.numero || '?'}</div>
-                                        <div class="jugador-nombre">${jugador.nombre || 'Desconocido'}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        `;
+                alineacion.titulares.forEach(j => { if (grupos[j.posicion]) grupos[j.posicion].jugadores.push(j); });
+                Object.values(grupos).forEach(g => {
+                    if (g.jugadores.length > 0) {
+                        html += `<div class="posicion-detalle"><h4>${g.label}</h4>${g.jugadores.map(j =>
+                            `<div class="jugador-detalle"><div class="jugador-numero">${j.numero || '?'}</div><div class="jugador-nombre">${j.nombre || 'Desconocido'}</div></div>`
+                        ).join('')}</div>`;
                     }
                 });
             } else {
-                // Estructura antigua: goalkeepers, defenders, midfielders, forwards
-                const posiciones = [
-                    { key: 'goalkeepers', label: '🧤 Porteros' },
-                    { key: 'defenders', label: '🛡️ Defensas' },
-                    { key: 'midfielders', label: '⚙️ Centrocampistas' },
-                    { key: 'forwards', label: '⚡ Delanteros' }
-                ];
-
-                posiciones.forEach(pos => {
-                    if (alineacion[pos.key] && alineacion[pos.key].length > 0) {
-                        html += `
-                            <div class="posicion-detalle">
-                                <h4>${pos.label}</h4>
-                                ${alineacion[pos.key].map(jugador => {
-                                    const nombre = jugador.nombre || jugador.name || 'Desconocido';
-                                    const numero = jugador.numero || jugador.number || '?';
-                                    return `
-                                        <div class="jugador-detalle">
-                                            <div class="jugador-numero">${numero}</div>
-                                            <div class="jugador-nombre">${nombre}</div>
-                                        </div>
-                                    `;
-                                }).join('')}
-                            </div>
-                        `;
+                [['goalkeepers','🧤 Porteros'],['defenders','🛡️ Defensas'],['midfielders','⚙️ Centrocampistas'],['forwards','⚡ Delanteros']].forEach(([key, label]) => {
+                    if (alineacion[key]?.length > 0) {
+                        html += `<div class="posicion-detalle"><h4>${label}</h4>${alineacion[key].map(j =>
+                            `<div class="jugador-detalle"><div class="jugador-numero">${j.numero || j.number || '?'}</div><div class="jugador-nombre">${j.nombre || j.name || 'Desconocido'}</div></div>`
+                        ).join('')}</div>`;
                     }
                 });
             }
 
             html += '</div>';
 
-            // Agregar información de suplentes si existen
-            if (alineacion.suplentes && alineacion.suplentes.length > 0) {
-                html += `
-                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9ecef;">
-                        <h4 style="color: #667eea; margin-bottom: 15px;">🔄 Suplentes (${alineacion.suplentes.length})</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
-                            ${alineacion.suplentes.map(jugador => `
-                                <div class="jugador-detalle">
-                                    <div class="jugador-numero">${jugador.numero || '?'}</div>
-                                    <div class="jugador-nombre">${jugador.nombre || 'Desconocido'}</div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
+            if (alineacion.suplentes?.length > 0) {
+                html += `<div style="margin-top:20px;padding-top:20px;border-top:1px solid #e9ecef;">
+                    <h4 style="color:#667eea;margin-bottom:15px;">🔄 Suplentes (${alineacion.suplentes.length})</h4>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+                        ${alineacion.suplentes.map(j =>
+                            `<div class="jugador-detalle"><div class="jugador-numero">${j.numero || '?'}</div><div class="jugador-nombre">${j.nombre || 'Desconocido'}</div></div>`
+                        ).join('')}
+                    </div></div>`;
             }
 
             return html;
         }
 
-        // Votar por alineación
-        async function votarAlineacion(alineacionId) {
-            try {
-                const token = localStorage.getItem('token');
-                const response = await fetch(`${API_BASE_URL}/alineaciones/${alineacionId}/votar`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (!response.ok) throw new Error('Error al votar');
-
-                const data = await response.json();
-
-                // Marcar como votado
-                votosRealizados.add(alineacionId);
-                guardarVotosRealizados();
-
-                mostrarAlerta('¡Voto registrado exitosamente!', 'success');
-
-                // Recargar alineaciones para ver votos actualizados
-                const partidoId = document.getElementById('partidoSelect').value;
-                if (partidoId) {
-                    await cargarAlineaciones(partidoId);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                mostrarAlerta('Error al registrar el voto', 'error');
-            }
-        }
-
-        // ========== FUNCIONES DE COMENTARIOS ==========
-
-        // Renderizar sección de comentarios
-        function renderComentariosSection(alineacionId) {
-            return `
-                <div class="comentarios-section" onclick="event.stopPropagation()">
-                    <div class="comentarios-header">
-                        <h3>💬 Comentarios</h3>
-                        <button class="btn-toggle-comentarios" onclick="toggleComentarios(${alineacionId})">
-                            Ver comentarios
-                        </button>
-                    </div>
-                    <div class="comentarios-container" id="comentarios-${alineacionId}">
-                        <div class="comentario-form">
-                            <textarea id="comentario-texto-${alineacionId}" placeholder="Escribe tu comentario sobre esta alineación..."></textarea>
-                            <button class="btn-enviar" onclick="enviarComentario(${alineacionId})">
-                                📤 Enviar comentario
-                            </button>
-                        </div>
-                        <div class="comentarios-lista" id="lista-comentarios-${alineacionId}">
-                            <p style="text-align: center; color: #999;">Cargando comentarios...</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Toggle comentarios (mostrar/ocultar)
-        async function toggleComentarios(alineacionId) {
-            const container = document.getElementById(`comentarios-${alineacionId}`);
-            const btn = event.target;
-
-            if (container.classList.contains('visible')) {
-                container.classList.remove('visible');
-                btn.textContent = 'Ver comentarios';
+        // ── Event listeners e inicio ───────────────────────────────────
+        document.getElementById('partidoSelect').addEventListener('change', e => {
+            const id = e.target.value;
+            if (id) {
+                cargarAlineaciones(id);
             } else {
-                container.classList.add('visible');
-                btn.textContent = 'Ocultar comentarios';
-                // Cargar comentarios
-                await cargarComentarios(alineacionId);
-            }
-        }
-
-        // Cargar comentarios de una alineación
-        async function cargarComentarios(alineacionId) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/comentarios/alineacion/${alineacionId}`);
-
-                if (!response.ok) throw new Error('Error al cargar comentarios');
-
-                const comentarios = await response.json();
-                renderizarComentarios(alineacionId, comentarios);
-            } catch (error) {
-                console.error('Error:', error);
-                const lista = document.getElementById(`lista-comentarios-${alineacionId}`);
-                lista.innerHTML = '<p class="no-comentarios">Error al cargar comentarios</p>';
-            }
-        }
-
-        // Renderizar lista de comentarios
-        function renderizarComentarios(alineacionId, comentarios) {
-            const lista = document.getElementById(`lista-comentarios-${alineacionId}`);
-
-            if (comentarios.length === 0) {
-                lista.innerHTML = '<p class="no-comentarios">💭 Aún no hay comentarios. ¡Sé el primero en comentar!</p>';
-                return;
-            }
-
-            lista.innerHTML = comentarios.map(comentario => renderComentario(comentario, alineacionId)).join('');
-        }
-
-        // Renderizar un comentario individual
-        function renderComentario(comentario, alineacionId) {
-            const fecha = new Date(comentario.createdAt).toLocaleString('es-ES', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            const html = `
-                <div class="comentario" id="comentario-${comentario.id}">
-                    <div class="comentario-header-info">
-                        <span class="comentario-autor">👤 ${comentario.userEmail || 'Usuario'}</span>
-                        <span class="comentario-fecha">🕒 ${fecha}</span>
-                    </div>
-                    <div class="comentario-mensaje">${escapeHtml(comentario.mensaje)}</div>
-                    <div class="comentario-acciones">
-                        <button class="btn-responder" onclick="mostrarFormularioRespuesta(${comentario.id}, ${alineacionId})">
-                            💬 Responder
-                        </button>
-                    </div>
-                    <div class="respuestas" id="respuestas-${comentario.id}"></div>
-                </div>
-            `;
-
-            // Cargar respuestas automáticamente después de renderizar
-            setTimeout(() => cargarRespuestas(comentario.id), 100);
-
-            return html;
-        }
-
-        // Mostrar formulario para responder a un comentario
-        async function mostrarFormularioRespuesta(comentarioId, alineacionId) {
-            const respuestasDiv = document.getElementById(`respuestas-${comentarioId}`);
-
-            // Si ya existe un formulario, no crear otro
-            if (respuestasDiv.querySelector('.formulario-respuesta')) {
-                return;
-            }
-
-            // Crear el formulario
-            const formulario = document.createElement('div');
-            formulario.className = 'formulario-respuesta';
-            formulario.innerHTML = `
-                <textarea id="respuesta-texto-${comentarioId}" placeholder="Escribe tu respuesta..."></textarea>
-                <div class="acciones">
-                    <button class="btn-enviar-respuesta" onclick="enviarRespuesta(${comentarioId}, ${alineacionId})">
-                        📤 Enviar
-                    </button>
-                    <button class="btn-cancelar" onclick="cancelarRespuesta(${comentarioId})">
-                        ❌ Cancelar
-                    </button>
-                </div>
-            `;
-
-            // Insertar el formulario al inicio (antes de las respuestas existentes)
-            respuestasDiv.insertBefore(formulario, respuestasDiv.firstChild);
-        }
-
-        // Cancelar respuesta
-        function cancelarRespuesta(comentarioId) {
-            const respuestasDiv = document.getElementById(`respuestas-${comentarioId}`);
-            const formulario = respuestasDiv.querySelector('.formulario-respuesta');
-            if (formulario) {
-                formulario.remove();
-            }
-        }
-
-        // Cargar respuestas de un comentario
-        async function cargarRespuestas(comentarioId) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/comentarios/${comentarioId}/respuestas`);
-
-                if (!response.ok) throw new Error('Error al cargar respuestas');
-
-                const respuestas = await response.json();
-                renderizarRespuestas(comentarioId, respuestas);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
-        // Renderizar respuestas
-        function renderizarRespuestas(comentarioId, respuestas) {
-            const respuestasDiv = document.getElementById(`respuestas-${comentarioId}`);
-
-            // Mantener el formulario si existe
-            const formulario = respuestasDiv.querySelector('.formulario-respuesta');
-
-            // Limpiar solo las respuestas existentes, no el formulario
-            const respuestasExistentes = respuestasDiv.querySelectorAll('.respuesta');
-            respuestasExistentes.forEach(r => r.remove());
-
-            // Renderizar las respuestas
-            if (respuestas.length > 0) {
-                respuestas.forEach(respuesta => {
-                    const fecha = new Date(respuesta.createdAt).toLocaleString('es-ES', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-
-                    const respuestaDiv = document.createElement('div');
-                    respuestaDiv.className = 'respuesta';
-                    respuestaDiv.innerHTML = `
-                        <div class="comentario-header-info">
-                            <span class="comentario-autor">👤 ${respuesta.userEmail || 'Usuario'}</span>
-                            <span class="comentario-fecha">🕒 ${fecha}</span>
-                        </div>
-                        <div class="comentario-mensaje">${escapeHtml(respuesta.mensaje)}</div>
-                    `;
-                    respuestasDiv.appendChild(respuestaDiv);
-                });
-            }
-        }
-
-        // Enviar comentario principal
-        async function enviarComentario(alineacionId) {
-            const textarea = document.getElementById(`comentario-texto-${alineacionId}`);
-            const mensaje = textarea.value.trim();
-
-            if (!mensaje) {
-                mostrarAlerta('Por favor escribe un comentario', 'error');
-                return;
-            }
-
-            const token = localStorage.getItem('token');
-            if (!token) {
-                mostrarAlerta('Debes iniciar sesión para comentar', 'error');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/comentarios`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        alineacionId: alineacionId,
-                        mensaje: mensaje
-                    })
-                });
-
-                if (response.status === 401 || response.status === 403) {
-                    mostrarAlerta('Tu sesión ha expirado. Redirigiendo...', 'error');
-                    localStorage.removeItem('token');
-                    setTimeout(() => window.location.href = 'login.html', 2000);
-                    return;
-                }
-
-                if (!response.ok) throw new Error('Error al enviar comentario');
-
-                textarea.value = '';
-                mostrarAlerta('✅ Comentario publicado correctamente', 'success');
-
-                // Recargar comentarios
-                await cargarComentarios(alineacionId);
-            } catch (error) {
-                console.error('Error:', error);
-                mostrarAlerta('Error al publicar el comentario', 'error');
-            }
-        }
-
-        // Enviar respuesta a un comentario
-        async function enviarRespuesta(comentarioId, alineacionId) {
-            const textarea = document.getElementById(`respuesta-texto-${comentarioId}`);
-            const mensaje = textarea.value.trim();
-
-            if (!mensaje) {
-                mostrarAlerta('Por favor escribe una respuesta', 'error');
-                return;
-            }
-
-            const token = localStorage.getItem('token');
-            if (!token) {
-                mostrarAlerta('Debes iniciar sesión para responder', 'error');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/comentarios`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        alineacionId: alineacionId,
-                        mensaje: mensaje,
-                        respondeAId: comentarioId
-                    })
-                });
-
-                if (response.status === 401 || response.status === 403) {
-                    mostrarAlerta('Tu sesión ha expirado. Redirigiendo...', 'error');
-                    localStorage.removeItem('token');
-                    setTimeout(() => window.location.href = 'login.html', 2000);
-                    return;
-                }
-
-                if (!response.ok) throw new Error('Error al enviar respuesta');
-
-                mostrarAlerta('✅ Respuesta publicada correctamente', 'success');
-
-                // Cancelar formulario y recargar respuestas
-                cancelarRespuesta(comentarioId);
-                await cargarRespuestas(comentarioId);
-
-            } catch (error) {
-                console.error('Error:', error);
-                mostrarAlerta('Error al publicar la respuesta', 'error');
-            }
-        }
-
-        // Función para escapar HTML y prevenir XSS
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ========== FIN FUNCIONES DE COMENTARIOS ==========
-
-        // Event listeners
-        document.getElementById('partidoSelect').addEventListener('change', (e) => {
-            const partidoId = e.target.value;
-            if (partidoId) {
-                cargarAlineaciones(partidoId);
-            } else {
-                document.getElementById('partidoInfo').style.display = 'none';
-                document.getElementById('equiposSection').style.display = 'none';
-                document.getElementById('emptyState').style.display = 'none';
+                ['partidoInfo','equiposSection','emptyState'].forEach(k => document.getElementById(k).style.display = 'none');
             }
         });
 
-        // Inicializar
-        if (verificarAutenticacion()) {
-            cargarVotosRealizados();
-            cargarPartidos();
-        }
+        if (verificarAutenticacion()) cargarPartidos();
     </script>
 </body>
 </html>

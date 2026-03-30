@@ -37,12 +37,9 @@ public class Alineacion {
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     private User createdBy;
 
-    @Column(name = "alineacion", nullable = false, columnDefinition = "json")
+    @Column(name = "alineacion", nullable = false, columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
     private EquipoDetalles alineacion;
-
-    @Column(name = "votos", nullable = false)
-    private Integer votos = 0;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

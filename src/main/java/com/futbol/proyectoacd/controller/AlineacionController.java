@@ -1,7 +1,6 @@
 package com.futbol.proyectoacd.controller;
 
 import com.futbol.proyectoacd.dto.AlineacionDTO;
-import com.futbol.proyectoacd.dto.UsuarioRankingDTO;
 import com.futbol.proyectoacd.model.Alineacion;
 import com.futbol.proyectoacd.model.Equipo;
 import com.futbol.proyectoacd.model.Partido;
@@ -117,7 +116,6 @@ public class AlineacionController {
                         Equipo nuevoEquipo = new Equipo();
                         nuevoEquipo.setNombre(request.getTeamName());
                         nuevoEquipo.setUser(user);
-                        nuevoEquipo.setVotos(0);
                         return equipoRepository.save(nuevoEquipo);
                     });
 
@@ -128,7 +126,6 @@ public class AlineacionController {
                         Equipo nuevoEquipo = new Equipo();
                         nuevoEquipo.setNombre(request.getHomeTeamName());
                         nuevoEquipo.setUser(user);
-                        nuevoEquipo.setVotos(0);
                         return equipoRepository.save(nuevoEquipo);
                     });
 
@@ -137,7 +134,6 @@ public class AlineacionController {
                         Equipo nuevoEquipo = new Equipo();
                         nuevoEquipo.setNombre(request.getAwayTeamName());
                         nuevoEquipo.setUser(user);
-                        nuevoEquipo.setVotos(0);
                         return equipoRepository.save(nuevoEquipo);
                     });
 
@@ -299,7 +295,7 @@ public class AlineacionController {
         }
     }
 
-    @Operation(summary = "Obtener todas las alineaciones de un partido ordenadas por votos")
+    @Operation(summary = "Obtener todas las alineaciones de un partido")
     @GetMapping("/partido/{partidoId}")
     public ResponseEntity<?> getAlineacionesPorPartido(@PathVariable Integer partidoId) {
         try {
@@ -308,13 +304,7 @@ public class AlineacionController {
 
             List<Alineacion> alineaciones = alineacionRepository.findByPartido(partido);
 
-            // Ordenar por votos de la alineación de mayor a menor
             List<AlineacionDTO> dtos = alineaciones.stream()
-                    .sorted((a1, a2) -> {
-                        int votos1 = a1.getVotos() != null ? a1.getVotos() : 0;
-                        int votos2 = a2.getVotos() != null ? a2.getVotos() : 0;
-                        return Integer.compare(votos2, votos1); // Descendente
-                    })
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
 
@@ -342,63 +332,6 @@ public class AlineacionController {
         }
     }
 
-    @Operation(summary = "Votar por una alineación (incrementa votos de la alineación específica)")
-    @PostMapping("/{id}/votar")
-    public ResponseEntity<?> votarAlineacion(@PathVariable Integer id) {
-        try {
-            Alineacion alineacion = alineacionRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Alineación no encontrada"));
-
-            // Incrementar votos de esta alineación específica
-            int votosActuales = alineacion.getVotos() != null ? alineacion.getVotos() : 0;
-            alineacion.setVotos(votosActuales + 1);
-            alineacion = alineacionRepository.save(alineacion);
-
-            log.info("Voto registrado para alineación ID {}: {} votos totales",
-                    alineacion.getId(), alineacion.getVotos());
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Voto registrado exitosamente");
-            response.put("alineacionId", alineacion.getId());
-            response.put("equipoNombre", alineacion.getEquipo().getNombre());
-            response.put("votos", alineacion.getVotos());
-            response.put("alineacion", convertToDTO(alineacion));
-
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error al votar alineación", e);
-            Map<String, String> error = new HashMap<>();
-            error.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-        }
-    }
-
-    @Operation(summary = "Obtener ranking global de usuarios por votos totales")
-    @GetMapping("/ranking")
-    public ResponseEntity<?> getRankingUsuarios() {
-        try {
-            List<Object[]> resultados = alineacionRepository.findRankingUsuarios();
-
-            List<UsuarioRankingDTO> ranking = resultados.stream()
-                    .map(row -> new UsuarioRankingDTO(
-                            (Integer) row[0],  // userId
-                            (String) row[1],   // email
-                            ((Number) row[2]).longValue(),  // totalVotos
-                            ((Number) row[3]).longValue()   // totalAlineaciones
-                    ))
-                    .collect(Collectors.toList());
-
-            log.info("Ranking obtenido: {} usuarios", ranking.size());
-
-            return ResponseEntity.ok(ranking);
-        } catch (Exception e) {
-            log.error("Error al obtener ranking de usuarios", e);
-            Map<String, String> error = new HashMap<>();
-            error.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-        }
-    }
-
     /**
      * Convierte Alineacion a AlineacionDTO
      */
@@ -416,7 +349,6 @@ public class AlineacionController {
                 partido.getFecha(),
                 equipo.getId(),
                 equipo.getNombre(),
-                alineacion.getVotos() != null ? alineacion.getVotos() : 0, // Votos de esta alineación específica
                 alineacion.getAlineacion(),
                 alineacion.getCreatedAt(),
                 alineacion.getCreatedBy().getEmail()

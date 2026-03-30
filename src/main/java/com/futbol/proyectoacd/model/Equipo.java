@@ -25,10 +25,7 @@ public class Equipo {
     @Column(name = "nombre", nullable = false, length = 150)
     private String nombre;
 
-    @Column(name = "votos")
-    private Integer votos = 0;
-
-    @Column(name = "alineacion", columnDefinition = "json")
+    @Column(name = "alineacion", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
     private EquipoDetalles alineacion;
 

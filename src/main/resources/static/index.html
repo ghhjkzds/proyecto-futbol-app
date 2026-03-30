@@ -362,13 +362,7 @@
             <a href="/ver-alineaciones.html" class="menu-card" id="verAlineacionesCard">
                 <div class="icon">🌟</div>
                 <h3>Ver Alineaciones</h3>
-                <p>Votar por las mejores</p>
-            </a>
-
-            <a href="/ranking.html" class="menu-card" id="rankingCard">
-                <div class="icon">🏆</div>
-                <h3>Ranking Global</h3>
-                <p>Los mejores usuarios</p>
+                <p>Explora las alineaciones de cada partido</p>
             </a>
 
             <a href="/swagger-ui.html" class="menu-card">
@@ -408,7 +402,6 @@
             const crearAlineacionCard = document.getElementById('crearAlineacionCard');
             const misAlineacionesCard = document.getElementById('misAlineacionesCard');
             const verAlineacionesCard = document.getElementById('verAlineacionesCard');
-            const rankingCard = document.getElementById('rankingCard');
 
             if (token && userEmail) {
                 // Usuario autenticado
@@ -444,9 +437,6 @@
                 verAlineacionesCard.classList.remove('disabled');
                 verAlineacionesCard.onclick = null;
 
-                // Ranking disponible para todos los usuarios autenticados
-                rankingCard.classList.remove('disabled');
-                rankingCard.onclick = null;
             } else {
                 // Usuario invitado
                 guestMessage.classList.add('show');
@@ -479,13 +469,6 @@
                 verAlineacionesCard.onclick = (e) => {
                     e.preventDefault();
                     alert('⚠️ Debes iniciar sesión para ver y votar alineaciones');
-                    window.location.href = '/login.html';
-                };
-
-                rankingCard.classList.add('disabled');
-                rankingCard.onclick = (e) => {
-                    e.preventDefault();
-                    alert('⚠️ Debes iniciar sesión para ver el ranking');
                     window.location.href = '/login.html';
                 };
             }
